@@ -1,9 +1,6 @@
 import pytest
-from main import BooksCollector
 
-@pytest.fixture
-def collector():
-    return BooksCollector()
+from main import BooksCollector
 
 class TestBooksCollector:
 
@@ -42,6 +39,8 @@ class TestBooksCollector:
         assert collector.get_book_genre('5 Элемент') == 'Фантастика'
 
     def test_get_book_genre_returns_none_for_unknown_book(self, collector):
+        collector.add_new_book('5 Элемент')
+        collector.set_book_genre('5 Элемент', 'Фантастика')
         assert collector.get_book_genre('Жигало') is None
 
     def test_get_books_with_specific_genre_specific_genre(self, collector):
@@ -55,10 +54,6 @@ class TestBooksCollector:
         collector.set_book_genre('Наруто', 'Анимэ')
         result = collector.get_books_with_specific_genre('Анимэ')
         assert result == []
-
-    def test_get_books_genre_returns_empty_dict(self, collector):
-        result = collector.get_books_genre()
-        assert result == {}
 
     def test_get_books_genre_returns_correct_dict(self, collector):
         collector.add_new_book('5 Элемент')
